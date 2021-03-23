@@ -19,9 +19,9 @@ class VerifiedSmsHandlerTest {
     private fun constructDummyRequest() : HttpServletRequest
     {
         val request = MockHttpServletRequest()
-        val params = HashMap<String, Array<String>>()
+        val params = hashMapOf<String, Array<String>>()
         val nameValuePair = ArrayList<NameValuePair>(3)
-        params.put("a", Array(1){"alphabet"})
+        params.put("a", arrayOf("alphabet"))
         params.put("b", Array(1){"bananas"})
         params.put("timestamp", Array(1){ Instant.now().epochSecond.toString()})
         nameValuePair.add(BasicNameValuePair("a","alphabet"))

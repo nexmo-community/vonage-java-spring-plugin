@@ -25,15 +25,16 @@ class VonageArgumentResolverTest {
 
     @Test
     fun testArgumentResolverWithUrlContent(){
-        val request = MockHttpServletRequest()
-        request.addParameter("msisdn","12018675309")
-        request.addParameter("to","19738675309")
-        request.addParameter("text", "Testing get type")
-        request.addParameter("messageId","17000002A9E9F4E0")
-        request.addParameter("keyword","TESTING")
-        request.addParameter("message-timestamp","2021-03-18 19:04:59")
-        request.addParameter("timestamp","1616094479")
-        request.addParameter("nonce","231a9c15-6732-4ea7-81d1-3e564f3a89b2")
+        val request = MockHttpServletRequest().apply {
+			addParameter("msisdn","12018675309")
+			addParameter("to","19738675309")
+			addParameter("text", "Testing get type")
+			addParameter("messageId","17000002A9E9F4E0")
+			addParameter("keyword","TESTING")
+			addParameter("message-timestamp","2021-03-18 19:04:59")
+			addParameter("timestamp","1616094479")
+			addParameter("nonce","231a9c15-6732-4ea7-81d1-3e564f3a89b2")
+        }
         val method = VonageArgumentResolverTest::class.java.declaredMethods.find { m->m.name == "ExampleFunction" }
         val methodParam = MethodParameter(method,0)
         val resolver = VonageArgumentResolver()

@@ -6,7 +6,7 @@
 
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.3.41"
+    id("org.jetbrains.kotlin.jvm") version "1.4.31"
 
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
@@ -17,10 +17,9 @@ repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     mavenCentral()
-    jcenter()
 }
-tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions { jvmTarget = "11" } }
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
 }
 
 dependencies {
@@ -44,4 +43,3 @@ dependencies {
     testImplementation("org.springframework:spring-test:5.3.5")
     testImplementation("org.apache.httpcomponents:httpcore:4.4.11")
 }
-
