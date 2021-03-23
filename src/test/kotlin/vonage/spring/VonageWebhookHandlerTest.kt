@@ -65,9 +65,8 @@ class VonageWebhookHandlerTest {
     @Test
     fun testJsonParsing(){
         // Arrange
-        val request = MockHttpServletRequest()
         val response = MockHttpServletResponse()
-        request.contentType="application/json"
+
         val handler = VonageWebhookHandler<MessageEvent>(SampleDelegate(), MessageEvent::class.java, true)
         val json: String = "{\n" +
                 "    \"msisdn\": \"12018675309\",\n" +
@@ -80,7 +79,10 @@ class VonageWebhookHandlerTest {
                 "    \"timestamp\": \"1616094479\",\n" +
                 "    \"nonce\": \"231a9c15-6732-4ea7-81d1-3e564f3a89b2\"\n" +
                 "}"
-        request.setContent(json.toByteArray())
+        val request = MockHttpServletRequest().apply{
+            contentType = "application/json"
+            setContent(json.toByteArray())
+        }
 
         //act
         val result = handler.preHandle(request, response, handler)
@@ -94,16 +96,17 @@ class VonageWebhookHandlerTest {
     @Test
     fun testParameterParsing(){
         //arrange
-        val request = MockHttpServletRequest()
-        request.addParameter("msisdn","12018675309")
-        request.addParameter("to","19738675309")
-        request.addParameter("text", "Testing get type")
-        request.addParameter("messageId","17000002A9E9F4E0")
-        request.addParameter("keyword","TESTING")
-        request.addParameter("message-timestamp","2021-03-18 19:04:59")
-        request.addParameter("timestamp","1616094479")
-        request.addParameter("nonce","231a9c15-6732-4ea7-81d1-3e564f3a89b2")
-        request.contentType = "application/www-x-form-urlencoded"
+        val request = MockHttpServletRequest().apply{
+            addParameter("msisdn","12018675309")
+            addParameter("to","19738675309")
+            addParameter("text", "Testing get type")
+            addParameter("messageId","17000002A9E9F4E0")
+            addParameter("keyword","TESTING")
+            addParameter("message-timestamp","2021-03-18 19:04:59")
+            addParameter("timestamp","1616094479")
+            addParameter("nonce","231a9c15-6732-4ea7-81d1-3e564f3a89b2")
+            contentType = "application/www-x-form-urlencoded"
+        }
         val handler = VonageWebhookHandler<MessageEvent>(SampleDelegate(), MessageEvent::class.java, true)
         val response = MockHttpServletResponse()
         //act
@@ -115,18 +118,19 @@ class VonageWebhookHandlerTest {
 
     @Test
     fun testParameterFailedParsing(){
-        val request = MockHttpServletRequest()
+        val request = MockHttpServletRequest().apply {
+            contentType = "application/www-x-form-urlencoded"
+            addParameter("msisdn","12018675309")
+            addParameter("to","19738675309")
+            addParameter("text", "Testing get type")
+            addParameter("messageId","17000002A9E9F4E0")
+            addParameter("keyword","TESTING")
+            addParameter("message-timestamp","malformed-timestamp")
+            addParameter("timestamp","1616094479")
+            addParameter("nonce","231a9c15-6732-4ea7-81d1-3e564f3a89b2")
+        }
         val response = MockHttpServletResponse()
         val handler = VonageWebhookHandler<MessageEvent>(SampleDelegate(), MessageEvent::class.java, true)
-        request.contentType = "application/www-x-form-urlencoded"
-        request.addParameter("msisdn","12018675309")
-        request.addParameter("to","19738675309")
-        request.addParameter("text", "Testing get type")
-        request.addParameter("messageId","17000002A9E9F4E0")
-        request.addParameter("keyword","TESTING")
-        request.addParameter("message-timestamp","malformed-timestamp")
-        request.addParameter("timestamp","1616094479")
-        request.addParameter("nonce","231a9c15-6732-4ea7-81d1-3e564f3a89b2")
 
         //act
         val result = handler.preHandle(request,response,handler)
@@ -138,7 +142,7 @@ class VonageWebhookHandlerTest {
 
     @Test
     fun testParametersWithISO8601Timestamp(){
-        val request = MockHttpServletRequest()
+
         val response = MockHttpServletResponse()
         val handler = VonageWebhookHandler<CallEvent>(SampleDelegateISO8601(), CallEvent::class.java, true)
         val json: String = "{\n" +
@@ -156,8 +160,11 @@ class VonageWebhookHandlerTest {
                 "    \"direction\": \"inbound\",\n" +
                 "    \"timestamp\": \"2021-03-18T21:00:07.036Z\"\n" +
                 "}"
-        request.contentType="application/json"
-        request.setContent(json.toByteArray())
+        val request = MockHttpServletRequest().apply {
+            contentType = "application/json"
+            setContent(json.toByteArray())
+        }
+
         val result = handler.preHandle(request,response,handler)
         assertTrue { result }
         assertEquals(HttpServletResponse.SC_OK, response.status)

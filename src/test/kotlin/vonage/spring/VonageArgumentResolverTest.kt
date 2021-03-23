@@ -52,8 +52,7 @@ class VonageArgumentResolverTest {
 
     @Test
     fun testArgumentResolverWith(){
-        val request = MockHttpServletRequest()
-        request.contentType="application/json"
+
         val json: String = "{\n" +
         "    \"msisdn\": \"12018675309\",\n" +
                 "    \"to\": \"19738675309\",\n" +
@@ -65,7 +64,11 @@ class VonageArgumentResolverTest {
                 "    \"timestamp\": \"1616094012\",\n" +
                 "    \"nonce\": \"231a9c15-6732-4ea7-81d1-3e564f3a89b2\"\n" +
                 "}"
-        request.setContent(json.toByteArray())
+        val request = MockHttpServletRequest().apply {
+            contentType="application/json"
+            setContent(json.toByteArray())
+        }
+
         val method = VonageArgumentResolverTest::class.java.declaredMethods.find { m->m.name == "ExampleFunction" }
         val methodParam = MethodParameter(method,0)
         val resolver = VonageArgumentResolver()
@@ -83,7 +86,7 @@ class VonageArgumentResolverTest {
 
     @Test
     fun testArgumentResolveWithISO8601DateType(){
-        val request = MockHttpServletRequest()
+
         val json: String = "{\n" +
                 "    \"headers\": {},\n" +
                 "    \"uuid\": \"9aa6161d22317b86256ecac63a31c2a9\",\n" +
@@ -99,9 +102,10 @@ class VonageArgumentResolverTest {
                 "    \"direction\": \"inbound\",\n" +
                 "    \"timestamp\": \"2021-03-18T21:00:07.036Z\"\n" +
                 "}"
-        request.contentType="application/json"
-        System.out.println(this)
-        request.setContent(json.toByteArray())
+        val request = MockHttpServletRequest().apply {
+            contentType="application/json"
+            setContent(json.toByteArray())
+        }
         val method = VonageArgumentResolverTest::class.java.declaredMethods.find { m->m.name == "ExampleFunction2" }
         val methodParam = MethodParameter(method,0)
         val resolver = VonageArgumentResolver()

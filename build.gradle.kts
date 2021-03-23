@@ -9,7 +9,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.31"
 
     // Apply the java-library plugin for API and implementation separation.
-    `java-library`
+    id("java-library")
 
 }
 
@@ -18,16 +18,14 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     mavenCentral()
 }
-tasks.withType<KotlinCompile> {
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
 }
 
 dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-
-    // Use the Kotlin JDK 8 standard library.
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("org.springframework:spring-web:5.3.4")
     implementation("org.springframework:spring-webmvc:5.3.4")

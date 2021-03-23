@@ -19,11 +19,7 @@ class VerifiedSmsHandlerTest {
     private fun constructDummyRequest() : HttpServletRequest
     {
         val request = MockHttpServletRequest()
-        val params = hashMapOf<String, Array<String>>()
-        val nameValuePair = ArrayList<NameValuePair>(3)
-        params.put("a", arrayOf("alphabet"))
-        params.put("b", Array(1){"bananas"})
-        params.put("timestamp", Array(1){ Instant.now().epochSecond.toString()})
+        val nameValuePair = mutableListOf<NameValuePair>()
         nameValuePair.add(BasicNameValuePair("a","alphabet"))
         nameValuePair.add(BasicNameValuePair("b","bananas"))
         RequestSigning.constructSignatureForRequestParameters(nameValuePair,"abcde")

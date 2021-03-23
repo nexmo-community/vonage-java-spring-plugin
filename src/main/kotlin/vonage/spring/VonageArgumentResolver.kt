@@ -40,10 +40,7 @@ class VonageArgumentResolver : HandlerMethodArgumentResolver {
             obj = om.readValue(request.reader.lines().collect(Collectors.joining()), c)
         }
         else{
-            val params = HashMap<String,String>()
-            for(entry in request.parameterMap){
-                params[entry.key] = entry.value.first()
-            }
+            val params = request.parameterMap.map{it.key to it.value.first()}.toMap()
             obj = om.convertValue(params,c)
         }
         return obj
