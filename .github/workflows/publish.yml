@@ -1,6 +1,8 @@
 name: Publish to Nexus
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - auto-release
 jobs:
   build:
     runs-on: ubuntu-latest
