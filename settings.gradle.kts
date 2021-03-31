@@ -8,3 +8,4 @@
  */
 
 rootProject.name = "vonage-java-spring"
+rootProject.buildFileName = "build.gradle.kts"
