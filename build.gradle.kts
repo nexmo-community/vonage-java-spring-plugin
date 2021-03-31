@@ -11,7 +11,12 @@ plugins {
     // Apply the java-library plugin for API and implementation separation.
     id("java-library")
 
+    id("signing")
+    id("maven-publish")
 }
+
+group = "com.vonage"
+version = "0.0.12"
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -41,3 +46,76 @@ dependencies {
     testImplementation("org.springframework:spring-test:5.3.5")
     testImplementation("org.apache.httpcomponents:httpcore:4.4.11")
 }
+
+
+publishing{
+    publications {
+        create<MavenPublication>("mavenJava"){
+            artifactId = "spring"
+            from(components["java"])
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
+            pom{
+                name.set("spring")
+                description.set("A Vonage middleware library for spring")
+                artifactId = "spring"
+                url.set("https://github.com/nexmo-community/vonage-java-spring")
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                issueManagement{
+                    system.set("GitHub")
+                    url.set("https://github.com/nexmo-comunity/vonage-java-spring/issues")
+                }
+                developers{
+                    developer{
+                        id.set("devrel")
+                        name.set("Voange Developer Relations Team")
+                        email.set("devrel@vonage.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git@github.com:nexmo-community/vonage-java-spring")
+                    developerConnection.set("scm:git:git@github.com:nexmo-community/vonage-java-spring")
+                    url.set("http://github.com/nexmo-community/vonage-java-spring")
+                }
+                organization{
+                    name.set("Vonage")
+                    url.set("https://developer.nexmo.com")
+                }
+            }
+        }
+    }
+    repositories{
+        maven{
+            val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            val snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+            credentials.username = System.getenv("OSS_USERNAME")
+            credentials.password = System.getenv("OSS_PASSWORD")
+            url = if(version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+        }
+    }
+}
+
+signing {
+    val signingKey: String? = System.getenv("signingKey")
+    val signingPassword: String? = System.getenv("signingPassword")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign(publishing.publications["mavenJava"])
+}
+
+tasks.javadoc {
+    if (JavaVersion.current().isJava9Compatible) {
+        (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
+    }
+}
+
