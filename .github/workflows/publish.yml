@@ -3,19 +3,31 @@ on:
   push:
     branches:
       - auto-release
+#  release:
+#    types: [published]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install bump2version
+        run: |
+          python -m pip install --upgrade pip
+          pip install bump2version
+      - name: Bump Version
+        run: bump2version --new-version v0.0.6 patch && git tag v0.0.6 -f && git push && git push --tags origin
+#        run: bump2version --new-version ${{ github.event.release.tag_name }} patch && git tag ${{ github.event.release.tag_name }} -f && git push && git push --tags origin
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
           java-version: 8
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
       - name: Cache Gradle packages
         uses: actions/cache@v2
         with:
