@@ -107,6 +107,8 @@ publishing{
 signing {
     val signingKey: String? = System.getenv("signingKey")
     val signingPassword: String? = System.getenv("signingPassword")
+    val path: String? = System.getenv("PATH")
+    kotlin.io.println(path)
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications["mavenJava"])
 }
