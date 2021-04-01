@@ -26,4 +26,4 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: publish with gradle
-        run: alias PGP="gpg" && signingKey=${{secrets.SIGNING_KEY}} signingPassword=${{secrets.SIGNING_PASSWORD}} gradle publish --info
+        run: which gpg && signingKey=${{secrets.SIGNING_KEY}} signingPassword=${{secrets.SIGNING_PASSWORD}} gradle publish --info
