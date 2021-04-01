@@ -11,8 +11,6 @@ jobs:
         uses: actions/checkout@v2
       - name: setup gpg
         run: sudo apt-get --yes install gnupg
-      - name: alias pgp
-        run: alias PGP="gpg"
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
@@ -28,4 +26,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: publish with gradle
-        run: signingKey=${{secrets.SIGNING_KEY}} signingPassword=${{secrets.SIGNING_PASSWORD}} gradle publish --info
+        run:
+          - alias PGP="gpg"
+          - signingKey=${{secrets.SIGNING_KEY}} signingPassword=${{secrets.SIGNING_PASSWORD}} gradle publish --info
