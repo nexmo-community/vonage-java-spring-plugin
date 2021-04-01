@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.release.target_commitish }}
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -17,9 +19,10 @@ jobs:
           python -m pip install --upgrade pip
           git config --global user.email "44278943+NexmoDev@users.noreply.github.com"
           git config --global user.name "NexmoDev"
+          git config --glboal github.token ${{ secrets.GITHUB_TOKEN }}
           pip install bump2version
       - name: Bump Version
-        run: bump2version --new-version ${{ github.event.release.tag_name }} patch && git tag ${{ github.event.release.tag_name }} -f && git push origin/auto-release && git push --tags origin
+        run: bump2version --new-version ${{ github.event.release.tag_name }} patch && git tag ${{ github.event.release.tag_name }} -f && git push && git push --tags origin
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
