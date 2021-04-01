@@ -10,7 +10,7 @@ jobs:
       - name: Checkout the repo
         uses: actions/checkout@v2
       - name: setup gpg
-        run: apt-get --yes install gnupg
+        run: sudo apt-get --yes install gnupg
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
