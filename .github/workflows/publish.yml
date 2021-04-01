@@ -26,4 +26,4 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: publish with gradle
-        run: signingKey=${{secrets.SIGNING_KEY}} signingPassword=${{secrets.SIGNING_PASSWORD}} gradle publish --info
+        run: signingKey="${{secrets.SIGNING_KEY}}" signingPassword=${{secrets.SIGNING_PASSWORD}} gradle publish --info
