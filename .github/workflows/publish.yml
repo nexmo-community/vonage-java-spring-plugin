@@ -9,7 +9,8 @@ jobs:
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
-
+      - name: setup gpg
+      - uses: olafurpg/setup-gpg@v3
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
