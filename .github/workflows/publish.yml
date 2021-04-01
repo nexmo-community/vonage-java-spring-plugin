@@ -25,7 +25,8 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: set env vars
-        run: signingKey=${{secrets.SIGNING_KEY}} && signingPassword=${{secrets.SIGNING_PASSWORD}}
       - name: publish with gradle
+        env:
+          signingKey=${{secrets.SIGNING_KEY}}
+          signingPassword=${{secrets.SIGNING_PASSWORD}}
         run: gradle publish --info
