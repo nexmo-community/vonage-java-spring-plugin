@@ -8,8 +8,6 @@ This library enables you to setup your app to only accept validated SMS webhooks
 
 ## Welcome to Vonage
 
-<!-- change "github-repo" at the end of the link to be the name of your repo, this helps us understand which projects are driving signups so we can do more stuff that developers love -->
-
 If you're new to Vonage, you can [sign up for a Vonage API account](https://dashboard.nexmo.com/sign-up?utm_source=DEV_REL&utm_medium=github&utm_campaign=github-repo) and get some free credit to get you started.
 
 
