@@ -19,7 +19,7 @@ jobs:
           python -m pip install --upgrade pip
           git config --global user.email "44278943+NexmoDev@users.noreply.github.com"
           git config --global user.name "NexmoDev"
-          git config --glboal github.token ${{ secrets.GITHUB_TOKEN }}
+          git config --global github.token ${{ secrets.GITHUB_TOKEN }}
           pip install bump2version
       - name: Bump Version
         run: bump2version --new-version ${{ github.event.release.tag_name }} patch && git tag ${{ github.event.release.tag_name }} -f && git push && git push --tags origin
