@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "com.vonage"
-version = "0.0.4"
+version = "0.0.6"
 
 repositories {
     // Use jcenter for resolving dependencies.
