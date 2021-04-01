@@ -27,6 +27,6 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: publish with gradle
         env:
-          signingKey=${{secrets.SIGNING_KEY}}
-          signingPassword=${{secrets.SIGNING_PASSWORD}}
+          signingKey: ${{secrets.SIGNING_KEY}}
+          signingPassword: ${{secrets.SIGNING_PASSWORD}}
         run: gradle publish --info
