@@ -29,4 +29,4 @@ jobs:
         env:
           signingKey: ${{secrets.SIGNING_KEY}}
           signingPassword: ${{secrets.SIGNING_PASSWORD}}
-        run: gradle publish --info
+        run: signingKey=$signingKey signingPassword=$signingPassword gradle publish --info
