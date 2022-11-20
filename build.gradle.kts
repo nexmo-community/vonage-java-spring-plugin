@@ -49,7 +49,7 @@ dependencies {
 
     // Use the Kotlin JUnit integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-    testImplementation("org.springframework:spring-test:5.3.5")
+    testImplementation("org.springframework:spring-test:5.3.12")
     testImplementation("org.apache.httpcomponents:httpcore:4.4.11")
 }
 
