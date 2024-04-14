@@ -38,7 +38,7 @@ dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
-    implementation("org.springframework:spring-web:5.3.4")
+    implementation("org.springframework:spring-web:6.0.0")
     implementation("org.springframework:spring-webmvc:5.3.4")
     implementation("javax.servlet:javax.servlet-api:3.0.1")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.2")
