@@ -41,7 +41,7 @@ dependencies {
     implementation("org.springframework:spring-web:5.3.4")
     implementation("org.springframework:spring-webmvc:5.3.4")
     implementation("javax.servlet:javax.servlet-api:3.0.1")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.1")
     implementation("com.vonage:client:6.2.0")
 
     // Use the Kotlin test library.
